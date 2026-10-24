@@ -1526,6 +1526,24 @@ window.NFV_GAME_UPDATES = {
  ],
  "dragonvision": [
   {
+   "number": 14,
+   "title": "Kael arrives. Meet Echo.",
+   "items": [
+    {
+     "head": "Kael joins the fight",
+     "text": "**Kael joins the fight:** the hero of The Seal of Earth Zero, the Vision universe story, comes through the rift from his own Earth. A Tank whose Blue Aura shields the whole team, with three forms up to Magnetic Eye Kael. Summon him at the Shrine."
+    },
+    {
+     "head": "The Corrupted Echo has a new name",
+     "text": "**The Corrupted Echo has a new name:** the villain who guards the Vision Gate is now **Echo**. Same fighter, same forms and power, and every copy you own carries over."
+    },
+    {
+     "head": "New story lines",
+     "text": "**New story lines:** Kael meets Kairo in the rift, stands with him at the Vision Gate, and has a word in the ending."
+    }
+   ]
+  },
+  {
    "number": 13,
    "title": "Twenty new fighters. A Golden Shrine.",
    "items": [
