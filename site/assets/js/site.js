@@ -116,6 +116,24 @@
     });
   }
 
+  // Pixel social icons on a 16x16 grid: a stepped tile in the network's colour with a white glyph drawn from rows.
+  const glyph = rows => rows.flatMap((row, y) => [...row].flatMap((c, x) => c === '1' ? [`M${x} ${y}h1v1h-1z`] : [])).join('');
+  const ICONS = {
+    discord: { bg: '#5865f2', dark: '#3c45a5', rows: ['', '', '', ' 00011000011000', ' 00111111111100', ' 01111111111110', ' 01111111111110', ' 11100111100111', ' 11100111100111', ' 11111111111111', ' 11111111111111', ' 01110000001110', ' 00100000000100'] },
+    youtube: { bg: '#e62117', dark: '#9e140d', rows: ['', '', '', '', '', '      1', '      11', '      111', '      1111', '      111', '      11', '      1'] },
+    tiktok: { bg: '#111318', dark: '#000', rows: ['', '', '         1', '         11', '         111', '         1 1', '         1', '     1111', '    11  1', '    1   1', '    1   1', '    11 11', '     111'] },
+    instagram: { bg: '#c13584', dark: '#7a1f55', rows: ['', '', '   1111111111', '   1        1', '   1      1 1', '   1  111   1', '   1 1   1  1', '   1 1   1  1', '   1 1   1  1', '   1  111   1', '   1        1', '   1111111111'] },
+    reddit: { bg: '#ff4500', dark: '#b33000', rows: ['', '', '          11', '        1 11', '       1', '  11 1111111 11', '  1111111111111', '   11111111111', '   11 111 1111', '   11111111111', '   111 111 111', '    111   111', '     1111111'] },
+  };
+  /** A social network's pixel icon as inline SVG. */
+  function socialIcon(id, size = 20) {
+    const i = ICONS[id];
+    if (!i) return '';
+    return `<svg class="px-icon" width="${size}" height="${size}" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+      <path fill="${i.dark}" d="M1 0h14v1h1v14h-1v1H1v-1H0V1h1z"/><path fill="${i.bg}" d="M1 1h14v13H1z"/>
+      <path fill="#fff" d="${glyph(i.rows.map(r => r.replace(/ /g, '0')))}"/></svg>`;
+  }
+
   function initChrome() {
     const toggle = document.querySelector('.nav-toggle');
     const nav = document.getElementById('site-nav');
@@ -131,13 +149,39 @@
     document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 
     const studio = window.NFV_STUDIO || {};
+    const socials = (studio.socials || []).filter(s => s.url);
     const contact = [
       studio.email ? `<li><a href="mailto:${esc(studio.email)}">${esc(studio.email)}</a></li>` : '',
-      ...(studio.socials || []).map(s => `<li><a href="${esc(s.url)}" rel="noopener">${esc(s.label)}</a></li>`),
+      ...socials.map(s => `<li><a class="social-line" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${socialIcon(s.id, 18)}${esc(s.label)}</a></li>`),
     ].join('');
     document.querySelectorAll('[data-studio-contact]').forEach(el => {
       if (contact) el.innerHTML = contact; else el.closest('[data-studio-contact-block]')?.remove();
     });
+    // A row of pixel icons at the foot of every page.
+    const base = document.querySelector('.footer-base');
+    if (base && socials.length && !base.querySelector('.footer-social')) {
+      base.insertAdjacentHTML('afterbegin', `<div class="footer-social" aria-label="NineFoldVision community">${socials.map(s =>
+        `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" title="${esc(s.label)}" aria-label="${esc(s.label)} (opens in a new tab)">${socialIcon(s.id, 26)}</a>`).join('')}</div>`);
+    }
+    // Community page cards and the home page's icon row.
+    document.querySelectorAll('[data-community-cards]').forEach(el => {
+      el.innerHTML = socials.map(s => `<a class="card community-card lift" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">
+        ${socialIcon(s.id, 40)}<h3>${esc(s.label)}</h3><p class="muted">${esc(s.blurb || '')}</p><span class="go">${s.id === 'discord' ? 'Join the server' : 'Follow'} →</span></a>`).join('');
+    });
+    document.querySelectorAll('[data-community-icons]').forEach(el => {
+      el.innerHTML = socials.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" title="${esc(s.label)}" aria-label="${esc(s.label)} (opens in a new tab)">${socialIcon(s.id, 34)}</a>`).join('');
+    });
+    if (studio.discord) document.querySelectorAll('[data-join-discord]').forEach(a => { a.href = studio.discord; a.insertAdjacentHTML('afterbegin', socialIcon('discord', 20)); });
+    // Account button in the header; assets/js/account.js fills it in (signed-in name, or a sign-in prompt).
+    const headerWrap = document.querySelector('.site-header .wrap');
+    if (headerWrap && !headerWrap.querySelector('[data-account]')) {
+      headerWrap.insertAdjacentHTML('beforeend', `<a class="acct-btn" data-account href="profile.html"><span class="acct-dot" aria-hidden="true"></span><span data-account-label>Sign in</span></a>`);
+      const s = document.createElement('script');
+      s.type = 'module';
+      s.src = 'assets/js/account.js';
+      document.head.appendChild(s);
+    }
+    window.dispatchEvent(new Event('nfv:chrome'));
     document.querySelectorAll('[data-game-links]').forEach(el => {
       el.innerHTML = games().map(g => `<li><a href="game.html?g=${encodeURIComponent(g.slug)}">${esc(g.name)}</a></li>`).join('');
     });
@@ -153,6 +197,6 @@
     items.forEach(el => io.observe(el));
   }
 
-  window.NFV = { esc, md, store, games, game, gameUpdates, renderUpdate, renderNews, renderGameCard, forgeCard, progress, applySpoilers, observeReveals, statusLabel };
+  window.NFV = { socialIcon, esc, md, store, games, game, gameUpdates, renderUpdate, renderNews, renderGameCard, forgeCard, progress, applySpoilers, observeReveals, statusLabel };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initChrome); else initChrome();
 })();

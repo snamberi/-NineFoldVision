@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Community · NineFoldVision</title>
+  <meta name="description" content="Join the NineFoldVision community on Discord, YouTube, TikTok, Instagram and Reddit, and find other players.">
+  <meta name="theme-color" content="#121317">
+  <link rel="icon" type="image/png" href="assets/img/logo-favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/logo-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NineFoldVision">
+  <meta property="og:title" content="Community · NineFoldVision">
+  <meta property="og:description" content="Join the NineFoldVision community on Discord, YouTube, TikTok, Instagram and Reddit, and find other players.">
+  <meta property="og:image" content="assets/img/logo-1-primary.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;family=Inter:wght@400;500;600&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&amp;display=swap">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="NineFoldVision home">
+        <img src="assets/img/logo-icon-transparent.png" alt="" width="770" height="500">
+        <span>NineFold<b>Vision</b></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">&#9776;</button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="updates.html">Updates</a>
+        <a href="universe.html">Universe</a>
+        <a href="story.html">Story</a>
+        <a href="community.html">Community</a>
+        <a href="about.html">Studio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow">Community</p>
+        <h1>Join the NineFold community</h1>
+        <p class="lead">Every world we build is better with the people who play it. Come say hi, share your best runs and help shape what we make next.</p>
+        <div class="btn-row"><a class="btn btn-primary" data-join-discord href="https://discord.gg/5uGK5HDS8e" target="_blank" rel="noopener noreferrer">Join the Community</a><a class="btn btn-ghost" href="profile.html">Find a player</a></div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">Where to find us</p><h2>Our channels</h2></div></div>
+        <div class="grid grid-3 community-grid" data-community-cards></div>
+      </div>
+    </section>
+    <section class="section section-alt">
+      <div class="wrap grid grid-2" style="gap:40px;align-items:center">
+        <div>
+          <p class="eyebrow">Ninefold account</p>
+          <h2>One name for every world</h2>
+          <p class="muted">Sign in once with Discord or Google and you're the same player in Court Vision, Dragon Vision and here. Each game keeps its own progress, so nothing you do in one ever changes another, but your name, friends and trophies follow you everywhere.</p>
+          <ul class="feature-list">
+            <li>🏀 Court Vision: your level, hours played, leaderboard placements and cosmetics</li>
+            <li>🐉 Dragon Vision: your strongest fighters, highest stage and forged legends</li>
+            <li>🌌 NineFoldVision: a universal username, friends, a six-trophy showcase and activity from every game</li>
+          </ul>
+          <a class="btn btn-primary" href="profile.html">Open your profile</a>
+        </div>
+        <form class="card search-card" id="player-search" role="search">
+          <h3>Find a player</h3>
+          <label class="sr-only" for="player-q">Username</label>
+          <input id="player-q" type="search" placeholder="Search usernames…" autocomplete="off">
+          <ul class="search-results" data-results></ul>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <img src="assets/img/logo-transparent.png" alt="NineFoldVision" width="700" height="122">
+          <p>An independent game studio. Every game we make, every update we ship, and the universe that ties them together.</p>
+        </div>
+        <div>
+          <h4>Games</h4>
+          <ul data-game-links><li><a href="games.html">All games</a></li></ul>
+        </div>
+        <div>
+          <h4>Universe</h4>
+          <ul>
+            <li><a href="universe.html">The Vision universe</a></li>
+            <li><a href="story.html">Read the story</a></li>
+            <li><a href="updates.html">Updates</a></li>
+          </ul>
+        </div>
+        <div data-studio-contact-block>
+          <h4>Studio</h4>
+          <ul>
+            <li><a href="about.html">About NineFoldVision</a></li>
+          </ul>
+          <ul data-studio-contact style="margin-top:8px"></ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>&copy; <span data-year>2026</span> NineFoldVision. All rights reserved.</span>
+        <span>One studio. Many worlds.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="data/studio.js"></script>
+  <script src="data/games.js"></script>
+  <script src="data/trophies.js"></script>
+  <script type="module" src="assets/js/community.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

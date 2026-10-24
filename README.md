@@ -15,6 +15,8 @@ comfortable reading.
 | `universe.html` | The Vision universe guide: nine Earths, people, laws, the five Gods, places, open threads |
 | `story.html` | The chapter reader (`story.html#ch-12` opens chapter 12) |
 | `about.html` | The studio, brand assets, contact |
+| `community.html` | Discord, YouTube, TikTok, Instagram and Reddit, the Ninefold account, player search |
+| `profile.html?u=<name>` | A player's Ninefold profile: trophy showcase, Court Vision and Dragon Vision cards, friends, activity |
 
 **Spoilers.** On the Universe page, anything marked `class="spoiler" data-ch="N"` stays blurred until the
 visitor has reached chapter N in the reader (progress is saved in their browser). They can also tap an item
@@ -32,6 +34,19 @@ or switch "Show all spoilers" on.
 - **Story:** edit `content/books/the-seal-of-earth-zero.md` (`## Chapter N: Title` headings), or add a new book
   next to it with `book: 2` in its front matter, then run `node scripts/build-story.mjs`.
 - **Contact email and social links:** `site/data/studio.js`. They're hidden until filled in.
+- **Trophy names:** run `node scripts/sync-trophies.mjs` after either game adds achievements. It reads Court Vision
+  (`frontOffice.ts`, `modeAchievements.ts`) and Dragon Vision (`achievements.ts`) and rewrites `site/data/trophies.js`.
+
+## Ninefold accounts
+
+The site signs players in with the same Supabase project as Court Vision (Discord or Google), so a player has one
+username everywhere. Each game keeps its own progress in its own rows (Court Vision: `profiles` level/xp/stats,
+`user_achievements`; Dragon Vision: `game_summaries`, `game_trophies`); the site only reads them. It writes just the
+player's username, their `trophy_showcase` and `follows` (mutual follows are friends). Tables and policies are in
+Court Vision's `supabase/migrations/2026-10-25-ninefold-accounts.sql`.
+
+For sign-in to return here, add this site's address (e.g. `https://ninefoldvision.com/**`) to Supabase →
+Authentication → URL Configuration → Redirect URLs.
 
 ## Preview and deploy
 
