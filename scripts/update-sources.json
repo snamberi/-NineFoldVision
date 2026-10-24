@@ -1,0 +1,4 @@
+{
+  "courtvision": { "repo": "../CourtVision", "file": "src/content/whatsNew.ts" },
+  "dragonvision": { "repo": "../dragonvision", "file": "src/content/changelog.ts" }
+}

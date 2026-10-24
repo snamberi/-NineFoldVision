@@ -32,4 +32,28 @@ window.NFV_GAMES = [
       { name: 'Rebuild Challenge', text: 'Take over a real team at the lowest point in its history and win a championship before time runs out.' },
     ],
   },
+  {
+    slug: 'dragonvision',
+    name: 'Dragon Vision',
+    status: 'live',
+    genre: 'Pixel-art 5v5 fighter RPG',
+    accent: '#ff9a1f',
+    cover: 'assets/img/dragonvision-cover.png',
+    tagline: 'Collect fighters, evolve them and climb to the Vision Gate in this pixel-art 5v5 RPG.',
+    description:
+      'Dragon Vision is a turn-based 5v5 fighter-collection RPG. Summon original fighters, level them with coins, evolve them with duplicates up to 21 stars, and fight through 380 stages to the Vision Gate. Everything runs on your device with no server needed, so it plays offline.',
+    platforms: ['Browser', 'Installable app (plays offline)'],
+    price: 'Free',
+    links: [
+      { label: 'Play now', url: 'https://dragonvision.online', primary: true },
+    ],
+    modes: [
+      { name: 'The climb to the Vision Gate', text: '380 stages in 38 chapters across four acts, with a mini-boss at every fifth stage and a boss at every tenth.' },
+      { name: 'Summoning Shrine', text: 'Summon from one shared pool, focus the fighter you want, and evolve with duplicates: every star is a new form.' },
+      { name: 'Team & formation', text: 'Five pads, front and back rows, and roles (Tank, Support, Assassin, Blaster, Drainer) that change how a fight goes.' },
+      { name: 'Vision City', text: 'A town of buildings to grow: the Training Dojo, upgrades, shops, expeditions, bounties and more.' },
+      { name: 'Towers, raids & bosses', text: 'Climb the tower, take on Boss Raids and the World Boss, and clear the weekly event stages.' },
+      { name: 'Auto battles', text: 'Auto-Farm cleared stages and Auto-Progress through new ones at 1×, 2× or 4× speed.' },
+    ],
+  },
 ];

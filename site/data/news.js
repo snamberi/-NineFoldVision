@@ -3,6 +3,13 @@
 window.NFV_NEWS = [
   {
     date: '2026-10-24',
+    game: 'dragonvision',
+    title: 'Dragon Vision joins NineFoldVision',
+    text: 'Our pixel-art 5v5 fighter RPG now has its home here, with its full update history. Collect fighters, evolve them up to 21 stars and climb 380 stages to the Vision Gate. Free, in your browser, and it plays offline.',
+    link: { label: 'Play Dragon Vision', url: 'game.html?g=dragonvision' },
+  },
+  {
+    date: '2026-10-24',
     title: 'The Seal of Earth Zero: the full story is online',
     text: 'All fifty chapters of the first Vision universe story are now free to read on the site. Your place is saved as you go, and the Universe page reveals its secrets only as far as you have read.',
     link: { label: 'Start reading', url: 'story.html' },

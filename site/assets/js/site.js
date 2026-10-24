@@ -56,7 +56,7 @@
 
   function renderGameCard(g) {
     const play = (g.links || []).find(l => l.primary);
-    return `<article class="card game-card reveal">
+    return `<article class="card game-card reveal" style="--accent:${esc(g.accent || "")}">
       <a class="cover" href="game.html?g=${encodeURIComponent(g.slug)}" aria-label="${esc(g.name)}"><img src="${esc(g.cover)}" alt="${esc(g.name)} cover art" loading="lazy" width="1200" height="630"></a>
       <div class="body">
         <span class="status status-${esc(g.status)}">${statusLabel[g.status] || esc(g.status)}</span>

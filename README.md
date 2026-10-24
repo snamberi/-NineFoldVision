@@ -1,7 +1,9 @@
 # NineFoldVision studio site
 
 The home of every NineFoldVision game: the games, their updates, and the Vision universe story
-(*The Seal of Earth Zero*). A plain static site with no build step and no dependencies.
+(*The Seal of Earth Zero*). A plain static site with no build step and no dependencies, in the same pixel-art style as our games
+(Press Start 2P and VT323, notched pixel frames, hard shadows). The story itself is set in a book face for
+comfortable reading.
 
 ## Pages
 
@@ -22,10 +24,10 @@ or switch "Show all spoilers" on.
 
 - **A new game:** add an entry to `site/data/games.js`. It appears on Home, Games and Updates and gets its own
   page. While it's unannounced, the "In the forge" card holds its place.
-- **A Court Vision update:** add the release to `src/content/whatsNew.ts` in the Court Vision repo as usual,
-  then run `node scripts/sync-courtvision.mjs ../CourtVision` here (the path to your Court Vision checkout).
-- **Updates for another game:** list them under `updates` in its `games.js` entry (`{ title, items: [{ head, text }] }`,
-  newest first), or generate a `data/updates-<slug>.js` file the way Court Vision does.
+- **A game update:** add the release in the game's own repo as usual, then run `node scripts/sync-updates.mjs` here.
+  It reads every game listed in `scripts/update-sources.json` (Court Vision's `whatsNew.ts`, Dragon Vision's
+  `changelog.ts`) from checkouts next to this repo (`../CourtVision`, `../dragonvision`) and rewrites
+  `site/data/game-updates.js`. A new game needs one line in that file.
 - **Studio news:** add a post to the top of `site/data/news.js`.
 - **Story:** edit `content/books/the-seal-of-earth-zero.md` (`## Chapter N: Title` headings), or add a new book
   next to it with `book: 2` in its front matter, then run `node scripts/build-story.mjs`.
