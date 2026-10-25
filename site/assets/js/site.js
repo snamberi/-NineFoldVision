@@ -148,6 +148,7 @@
         <input id="${id}" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
         <input type="hidden" name="embed" value="1">
         <button class="btn btn-primary" type="submit">Sign up</button>
+        <p class="signup-legal">We'll send a confirmation email first. Your address is stored by our newsletter provider, Buttondown, and used only for these emails. See our <a href="privacy.html#collect">privacy policy</a>.</p>
       </form>
     </div>`;
     el.querySelector('form').addEventListener('submit', e => {
@@ -155,6 +156,34 @@
       // Let the browser send the form to the new tab first, then thank the visitor here.
       setTimeout(() => { form.innerHTML = '<p class="signup-done">Almost there! Check your inbox and confirm your email.</p>'; }, 50);
     });
+  }
+
+  // Legal pages: fill the operator, contact, governing law and date from data/studio.js.
+  function fillLegal(studio) {
+    const legal = studio.legal || {};
+    const contact = studio.email
+      ? `<a href="mailto:${esc(studio.email)}">${esc(studio.email)}</a>`
+      : studio.discord ? `<a href="${esc(studio.discord)}" target="_blank" rel="noopener noreferrer">our Discord server</a> (message a moderator)` : '';
+    document.querySelectorAll('[data-legal-contact]').forEach(el => { if (contact) el.innerHTML = contact; });
+    document.querySelectorAll('[data-legal-owner]').forEach(el => { el.textContent = legal.owner || studio.name || 'NineFoldVision'; });
+    if (legal.country) document.querySelectorAll('[data-legal-law]').forEach(el => { el.textContent = `These terms are governed by the laws of ${legal.country}`; });
+    if (legal.updated) document.querySelectorAll('[data-legal-updated]').forEach(el => {
+      el.textContent = new Date(`${legal.updated}T12:00:00`).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    });
+  }
+
+  // A one-time notice about the strictly necessary storage the site uses. No consent is needed for it (nothing
+  // tracks you), so this only informs; closing it is remembered.
+  function storageNotice() {
+    if (store.get('nfv:notice', false) || /(privacy|terms)\.html$/.test(location.pathname)) return;
+    const bar = document.createElement('div');
+    bar.className = 'storage-notice';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Storage notice');
+    bar.innerHTML = `<p>No ads, no tracking. We only store your reading progress and settings on your device, and keep you signed in if you choose to. <a href="privacy.html#storage">Privacy &amp; cookies</a></p>
+      <button type="button" class="btn btn-primary">Got it</button>`;
+    bar.querySelector('button').addEventListener('click', () => { store.set('nfv:notice', true); bar.remove(); });
+    document.body.appendChild(bar);
   }
 
   function initChrome() {
@@ -200,6 +229,8 @@
       footer.insertAdjacentHTML('beforebegin', `<section class="signup-band" aria-labelledby="signup-title"><div class="wrap" data-signup="band"></div></section>`);
     }
     document.querySelectorAll('[data-signup]').forEach(el => renderSignup(el));
+    fillLegal(studio);
+    storageNotice();
     if (studio.discord) document.querySelectorAll('[data-join-discord]').forEach(a => { a.href = studio.discord; a.insertAdjacentHTML('afterbegin', socialIcon('discord', 20)); });
     // Account button in the header; assets/js/account.js fills it in (signed-in name, or a sign-in prompt).
     const headerWrap = document.querySelector('.site-header .wrap');

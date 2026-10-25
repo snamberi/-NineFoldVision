@@ -1,7 +1,7 @@
 # NineFoldVision studio site
 
 The home of every NineFoldVision game: the games, their updates, and the Vision universe story
-(*The Seal of Earth Zero*). A plain static site with no build step and no dependencies, in the same pixel-art style as our games
+(*The Seal of Earth Zero*). A plain static site with no build step and no dependencies (fonts are self-hosted in `site/assets/fonts`), in the same pixel-art style as our games
 (Press Start 2P and VT323, notched pixel frames, hard shadows). The story itself is set in a book face for
 comfortable reading.
 
@@ -15,7 +15,8 @@ comfortable reading.
 | `universe.html` | The Vision universe guide: nine Earths, people, laws, the five Gods, places, open threads |
 | `story.html` | The chapter reader (`story.html#ch-12` opens chapter 12) |
 | `about.html` | The studio, brand assets, contact |
-| `watch.html` | The TikTok account's latest videos, plus any pinned videos |
+| `watch.html` | YouTube videos: latest uploads and pinned videos, each loaded only when played |
+| `privacy.html` / `terms.html` | Privacy & cookies policy and terms of use |
 | `press.html` | Press kit: fact sheet, copyable descriptions, logo and art downloads, contact |
 | `read/ch-<n>.html` | Share link for each chapter: link previews show the chapter's title and card, then it opens the reader |
 | `community.html` | Discord, YouTube, TikTok, Instagram and Reddit, the Ninefold account, player search |
@@ -40,8 +41,12 @@ or switch "Show all spoilers" on.
 - **Email sign-up:** create a free account at [buttondown.com](https://buttondown.com) and put its username in
   `newsletter.buttondown` in `site/data/studio.js`. The "Get new chapters and updates" form then appears above
   the footer on every page. Subscribers and sending emails are managed in Buttondown.
-- **Watch page:** `tiktok.username` in `site/data/studio.js` picks the account whose latest videos load
-  automatically. Add full video links to `tiktok.pinned` to feature them at the top.
+- **Watch page:** set `youtube.channelId` in `site/data/studio.js` (YouTube Studio → Settings → Channel →
+  Advanced settings) and the page shows your latest uploads. Add video or Shorts links to `youtube.pinned` to
+  feature them. Players are click-to-play, so nothing loads from YouTube until a visitor presses play.
+- **Legal pages:** `privacy.html` and `terms.html`. Fill in `legal.owner` and `legal.country` (and `email`) in
+  `site/data/studio.js`. If you add a new service (analytics, ads, another embed), update the privacy policy, and
+  anything that tracks visitors needs a consent banner before it loads.
 - **Chapter share cards:** after editing the story, `node scripts/build-story.mjs` also rewrites `site/read/`, and
   `python3 scripts/build-share-cards.py` (needs Pillow) redraws the preview images in `site/assets/img/share/`.
   The reader's "Share this chapter" button shares these links.

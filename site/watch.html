@@ -4,19 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Watch · NineFoldVision</title>
-  <meta name="description" content="Short videos from NineFoldVision: game clips, the cast of the Vision universe and behind-the-scenes from the studio.">
+  <meta name="description" content="Short videos from NineFoldVision: trailers, game clips, the cast of the Vision universe and behind-the-scenes from the studio.">
   <meta name="theme-color" content="#121317">
   <link rel="icon" type="image/png" href="assets/img/logo-favicon.png">
   <link rel="apple-touch-icon" href="assets/img/logo-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="NineFoldVision">
   <meta property="og:title" content="Watch · NineFoldVision">
-  <meta property="og:description" content="Short videos from NineFoldVision: game clips, the cast of the Vision universe and behind-the-scenes from the studio.">
+  <meta property="og:description" content="Short videos from NineFoldVision: trailers, game clips, the cast of the Vision universe and behind-the-scenes from the studio.">
   <meta property="og:image" content="https://ninefoldvision.online/assets/img/logo-1-primary.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;family=Inter:wght@400;500;600&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&amp;display=swap">
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -46,23 +43,26 @@
       <div class="wrap">
         <p class="eyebrow">Watch</p>
         <h1>Clips, characters and the story</h1>
-        <p class="lead">Short videos from the studio: wild moments from our games, the cast of the Vision universe and what we're building next.</p>
-        <div class="btn-row"><a class="btn btn-primary" data-tiktok-follow href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">Follow on TikTok</a><a class="btn btn-ghost" href="story.html">Read the story</a></div>
+        <p class="lead">Videos from the studio: trailers, wild moments from our games, the cast of the Vision universe and what we're building next.</p>
+        <div class="btn-row"><a class="btn btn-primary" data-yt-channel href="https://www.youtube.com/@NineFoldVision" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a><a class="btn btn-ghost" href="story.html">Read the story</a></div>
       </div>
     </section>
-    <section class="section" data-pinned-section hidden>
+    <section class="section" data-yt-section="pinned" hidden>
       <div class="wrap">
         <div class="section-head"><div><p class="eyebrow">Featured</p><h2>Start here</h2></div></div>
-        <div class="tiktok-grid" data-tiktok-pinned></div>
+        <div class="yt-grid" data-yt-pinned></div>
       </div>
     </section>
-    <section class="section section-alt">
+    <section class="section section-alt" data-yt-section="latest" hidden>
       <div class="wrap">
-        <div class="section-head"><div><p class="eyebrow">TikTok</p><h2>Latest videos</h2></div><a data-tiktok-follow href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">Open TikTok &rarr;</a></div>
-        <div class="tiktok-feed" data-tiktok-feed></div>
-        <noscript><p class="tiktok-fallback muted">Turn on JavaScript to see our latest TikTok videos here.</p></noscript>
+        <div class="section-head"><div><p class="eyebrow">YouTube</p><h2>Latest videos</h2></div><a data-yt-channel href="https://www.youtube.com/@NineFoldVision" target="_blank" rel="noopener noreferrer">Open the channel &rarr;</a></div>
+        <div class="yt-feature" data-yt-latest></div>
       </div>
     </section>
+    <section class="section section-alt" data-yt-section="empty" hidden>
+      <div class="wrap"><div class="card yt-empty"><h2>Videos are on the way</h2><p class="muted">Subscribe to the channel to see them first.</p><a class="btn btn-primary" data-yt-channel href="https://www.youtube.com/@NineFoldVision" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a></div></div>
+    </section>
+    <p class="wrap yt-note muted">Videos play from YouTube in privacy-enhanced mode. Nothing loads from YouTube until you press play; after that, YouTube's own <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a> applies. See our <a href="privacy.html#third-parties">privacy policy</a>.</p>
   </main>
 
   <footer class="site-footer">
@@ -94,7 +94,7 @@
         </div>
       </div>
       <div class="footer-base">
-        <span>&copy; <span data-year>2026</span> NineFoldVision. All rights reserved.</span>
+        <span>&copy; <span data-year>2026</span> NineFoldVision. All rights reserved. <a href="privacy.html">Privacy &amp; cookies</a> &middot; <a href="terms.html">Terms</a></span>
         <span>One studio. Many worlds.</span>
       </div>
     </div>
