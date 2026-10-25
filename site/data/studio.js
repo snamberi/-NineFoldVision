@@ -4,6 +4,14 @@ window.NFV_STUDIO = {
   tagline: 'One studio. Many worlds.',
   // Shown on the About page and in the footer when set, e.g. 'hello@yourdomain.com'.
   email: '',
+  // The site's public address, used for share links.
+  url: 'https://ninefoldvision.online',
+  // Email sign-up ("Get new chapters and updates"). Make a free account at buttondown.com, then put your
+  // Buttondown username here. The sign-up form stays hidden on every page until this is filled in.
+  newsletter: { buttondown: '' },
+  // The Watch page. It shows this TikTok account's latest videos automatically; add full video links to
+  // `pinned` (e.g. 'https://www.tiktok.com/@courtvision.game/video/7412345678901234567') to feature them above.
+  tiktok: { username: 'courtvision.game', pinned: [] },
   // The community server every game links to.
   discord: 'https://discord.gg/5uGK5HDS8e',
   // Profiles shown in the footer, on Community and About. `id` picks the pixel icon; `blurb` is the Community card text.

@@ -15,6 +15,9 @@ comfortable reading.
 | `universe.html` | The Vision universe guide: nine Earths, people, laws, the five Gods, places, open threads |
 | `story.html` | The chapter reader (`story.html#ch-12` opens chapter 12) |
 | `about.html` | The studio, brand assets, contact |
+| `watch.html` | The TikTok account's latest videos, plus any pinned videos |
+| `press.html` | Press kit: fact sheet, copyable descriptions, logo and art downloads, contact |
+| `read/ch-<n>.html` | Share link for each chapter: link previews show the chapter's title and card, then it opens the reader |
 | `community.html` | Discord, YouTube, TikTok, Instagram and Reddit, the Ninefold account, player search |
 | `profile.html?u=<name>` | A player's Ninefold profile: trophy showcase, Court Vision and Dragon Vision cards, friends, activity |
 
@@ -34,6 +37,14 @@ or switch "Show all spoilers" on.
 - **Story:** edit `content/books/the-seal-of-earth-zero.md` (`## Chapter N: Title` headings), or add a new book
   next to it with `book: 2` in its front matter, then run `node scripts/build-story.mjs`.
 - **Contact email and social links:** `site/data/studio.js`. They're hidden until filled in.
+- **Email sign-up:** create a free account at [buttondown.com](https://buttondown.com) and put its username in
+  `newsletter.buttondown` in `site/data/studio.js`. The "Get new chapters and updates" form then appears above
+  the footer on every page. Subscribers and sending emails are managed in Buttondown.
+- **Watch page:** `tiktok.username` in `site/data/studio.js` picks the account whose latest videos load
+  automatically. Add full video links to `tiktok.pinned` to feature them at the top.
+- **Chapter share cards:** after editing the story, `node scripts/build-story.mjs` also rewrites `site/read/`, and
+  `python3 scripts/build-share-cards.py` (needs Pillow) redraws the preview images in `site/assets/img/share/`.
+  The reader's "Share this chapter" button shares these links.
 - **Trophy names:** run `node scripts/sync-trophies.mjs` after either game adds achievements. It reads Court Vision
   (`frontOffice.ts`, `modeAchievements.ts`) and Dragon Vision (`achievements.ts`) and rewrites `site/data/trophies.js`.
 
