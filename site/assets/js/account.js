@@ -118,6 +118,7 @@ export function openSignIn() {
         <button type="button" class="btn btn-primary" data-provider="discord">${window.NFV?.socialIcon?.('discord', 20) || ''}Continue with Discord</button>
         <button type="button" class="btn btn-ghost" data-provider="google">Continue with Google</button>
       </div>
+      <p class="muted small">By signing in you agree to our <a href="terms.html">terms</a>. Our <a href="privacy.html#collect">privacy policy</a> explains what we store.</p>
       <p class="muted small" data-signin-error role="alert"></p>
     </dialog>`);
     dlg = document.getElementById('nfv-signin');

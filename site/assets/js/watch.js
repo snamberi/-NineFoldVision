@@ -1,30 +1,44 @@
-// watch.html: the TikTok account's latest videos (TikTok's own creator embed) and any pinned videos, both
-// set in data/studio.js. TikTok's embed script turns the blockquotes into players.
+// watch.html: YouTube videos from data/studio.js. Each player is a click-to-play placeholder: the YouTube
+// iframe (privacy-enhanced youtube-nocookie.com) is only created when the visitor presses play, so nothing
+// is loaded from YouTube, and no YouTube cookies are set, before then.
 (function () {
   const { esc } = window.NFV;
-  const tt = (window.NFV_STUDIO || {}).tiktok || {};
-  const user = String(tt.username || '').replace(/^@/, '');
-  const profile = user ? `https://www.tiktok.com/@${encodeURIComponent(user)}` : 'https://www.tiktok.com/';
-  document.querySelectorAll('[data-tiktok-follow]').forEach(a => { a.href = profile; });
+  const yt = (window.NFV_STUDIO || {}).youtube || {};
+  const channel = yt.url || 'https://www.youtube.com/@NineFoldVision';
+  document.querySelectorAll('[data-yt-channel]').forEach(a => { a.href = channel; });
 
-  const pinned = (tt.pinned || []).map(url => ({ url, id: (String(url).match(/\/video\/(\d+)/) || [])[1] })).filter(v => v.id);
+  /** The video ID from a watch, youtu.be, Shorts or embed link. */
+  const videoId = url => (String(url).match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/) || [])[1];
+  const player = (src, label, vertical) => `<div class="yt-player${vertical ? ' vertical' : ''}">
+      <button type="button" class="yt-play" data-src="${esc(src)}" aria-label="Play: ${esc(label)}">
+        <svg width="72" height="72" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#9e140d" d="M1 3h14v1h1v8h-1v1H1v-1H0V4h1z"/><path fill="#e62117" d="M1 4h14v8H1z"/><path fill="#fff" d="M6 6h1v4H6zM7 6.5h1v3H7zM8 7h1v2H8zM9 7.5h1v1H9z"/></svg>
+        <span>${esc(label)}</span><small>Plays from YouTube</small>
+      </button>
+    </div>`;
+  const embed = (path, extra = '') => `https://www.youtube-nocookie.com/embed/${path}${path.includes('?') ? '&' : '?'}autoplay=1&rel=0${extra}`;
+
+  const pinned = (yt.pinned || []).map(u => ({ id: videoId(u), shorts: /shorts\//.test(u) })).filter(v => v.id);
   if (pinned.length) {
-    document.querySelector('[data-pinned-section]').hidden = false;
-    document.querySelector('[data-tiktok-pinned]').innerHTML = pinned.map(v =>
-      `<blockquote class="tiktok-embed" cite="${esc(v.url)}" data-video-id="${esc(v.id)}" style="max-width:325px;min-width:300px"><section><a href="${esc(v.url)}" target="_blank" rel="noopener noreferrer">Watch on TikTok</a></section></blockquote>`).join('');
+    document.querySelector('[data-yt-section="pinned"]').hidden = false;
+    document.querySelector('[data-yt-pinned]').innerHTML = pinned.map((v, i) => player(embed(v.id), `Featured video ${i + 1}`, v.shorts)).join('');
   }
-
-  const feed = document.querySelector('[data-tiktok-feed]');
-  feed.innerHTML = user
-    ? `<blockquote class="tiktok-embed" cite="${esc(profile)}" data-unique-id="${esc(user)}" data-embed-type="creator" style="max-width:780px;min-width:288px"><section><a href="${esc(profile)}" target="_blank" rel="noopener noreferrer">@${esc(user)} on TikTok</a></section></blockquote>`
-    : '<p class="tiktok-fallback muted">Videos are coming soon.</p>';
-
-  if (user || pinned.length) {
-    const s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.tiktok.com/embed.js';
-    // Blocked by a privacy extension or offline: the blockquotes still link to TikTok.
-    s.onerror = () => feed.insertAdjacentHTML('beforeend', `<p class="tiktok-fallback muted">The player couldn't load here. <a href="${esc(profile)}" target="_blank" rel="noopener noreferrer">Watch on TikTok &rarr;</a></p>`);
-    document.body.appendChild(s);
+  // A channel's uploads playlist is its channel ID with UC swapped for UU; it always shows the newest upload first.
+  const uploads = /^UC[\w-]{22}$/.test(yt.channelId || '') ? `UU${yt.channelId.slice(2)}` : '';
+  if (uploads) {
+    document.querySelector('[data-yt-section="latest"]').hidden = false;
+    document.querySelector('[data-yt-latest]').innerHTML = player(embed(`videoseries?list=${uploads}`), 'Latest uploads');
   }
+  if (!pinned.length && !uploads) document.querySelector('[data-yt-section="empty"]').hidden = false;
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.yt-play');
+    if (!btn) return;
+    const frame = document.createElement('iframe');
+    frame.src = btn.dataset.src;
+    frame.title = btn.querySelector('span').textContent;
+    frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    btn.replaceWith(frame);
+  });
 })();

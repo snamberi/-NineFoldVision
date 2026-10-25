@@ -9,9 +9,15 @@ window.NFV_STUDIO = {
   // Email sign-up ("Get new chapters and updates"). Make a free account at buttondown.com, then put your
   // Buttondown username here. The sign-up form stays hidden on every page until this is filled in.
   newsletter: { buttondown: '' },
-  // The Watch page. It shows this TikTok account's latest videos automatically; add full video links to
-  // `pinned` (e.g. 'https://www.tiktok.com/@ninefoldvision/video/7412345678901234567') to feature them above.
-  tiktok: { username: 'ninefoldvision', pinned: [] },
+  // The Watch page (YouTube).
+  //   channelId: your channel ID (starts with UC; YouTube Studio → Settings → Channel → Advanced settings).
+  //              When set, the page shows your latest uploads automatically.
+  //   pinned:    video links to feature at the top, e.g. 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' or a Shorts link.
+  // Videos load only after the visitor presses play (privacy-enhanced mode), so YouTube sets nothing before then.
+  youtube: { url: 'https://www.youtube.com/@NineFoldVision', channelId: '', pinned: [] },
+  // Legal pages (privacy.html, terms.html). `owner` is the person or company running the site; `country` sets
+  // whose law applies to the terms. Contact uses `email` above, or the Discord server if that's empty.
+  legal: { owner: 'NineFoldVision', country: '', updated: '2026-10-25' },
   // The community server every game links to.
   discord: 'https://discord.gg/5uGK5HDS8e',
   // Profiles shown in the footer, on Community and About. `id` picks the pixel icon; `blurb` is the Community card text.
