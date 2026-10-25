@@ -134,6 +134,29 @@
       <path fill="#fff" d="${glyph(i.rows.map(r => r.replace(/ /g, '0')))}"/></svg>`;
   }
 
+  /** Fills a [data-signup] slot with the email form, or removes the slot while no newsletter is set up. */
+  function renderSignup(el) {
+    const user = (window.NFV_STUDIO || {}).newsletter?.buttondown;
+    if (!user) { (el.closest('.signup-band') || el).remove(); return; }
+    const band = el.dataset.signup === 'band';
+    const id = `signup-${Math.random().toString(36).slice(2, 8)}`;
+    el.innerHTML = `<div class="signup${band ? '' : ' card'}">
+      <div><p class="eyebrow">Newsletter</p><h2${band ? ' id="signup-title"' : ''}>Get new chapters and updates</h2>
+        <p class="muted">New story chapters, game updates and studio news, straight to your inbox. No spam, unsubscribe any time.</p></div>
+      <form class="signup-form" action="https://buttondown.com/api/emails/embed-subscribe/${encodeURIComponent(user)}" method="post" target="_blank">
+        <label class="sr-only" for="${id}">Email address</label>
+        <input id="${id}" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        <input type="hidden" name="embed" value="1">
+        <button class="btn btn-primary" type="submit">Sign up</button>
+      </form>
+    </div>`;
+    el.querySelector('form').addEventListener('submit', e => {
+      const form = e.currentTarget;
+      // Let the browser send the form to the new tab first, then thank the visitor here.
+      setTimeout(() => { form.innerHTML = '<p class="signup-done">Almost there! Check your inbox and confirm your email.</p>'; }, 50);
+    });
+  }
+
   function initChrome() {
     const toggle = document.querySelector('.nav-toggle');
     const nav = document.getElementById('site-nav');
@@ -171,6 +194,12 @@
     document.querySelectorAll('[data-community-icons]').forEach(el => {
       el.innerHTML = socials.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" title="${esc(s.label)}" aria-label="${esc(s.label)} (opens in a new tab)">${socialIcon(s.id, 34)}</a>`).join('');
     });
+    // Email sign-up: a band above the footer on every page, plus any [data-signup] slot a page adds.
+    const footer = document.querySelector('.site-footer');
+    if (footer && !document.querySelector('.signup-band')) {
+      footer.insertAdjacentHTML('beforebegin', `<section class="signup-band" aria-labelledby="signup-title"><div class="wrap" data-signup="band"></div></section>`);
+    }
+    document.querySelectorAll('[data-signup]').forEach(el => renderSignup(el));
     if (studio.discord) document.querySelectorAll('[data-join-discord]').forEach(a => { a.href = studio.discord; a.insertAdjacentHTML('afterbegin', socialIcon('discord', 20)); });
     // Account button in the header; assets/js/account.js fills it in (signed-in name, or a sign-in prompt).
     const headerWrap = document.querySelector('.site-header .wrap');
@@ -197,6 +226,6 @@
     items.forEach(el => io.observe(el));
   }
 
-  window.NFV = { socialIcon, esc, md, store, games, game, gameUpdates, renderUpdate, renderNews, renderGameCard, forgeCard, progress, applySpoilers, observeReveals, statusLabel };
+  window.NFV = { socialIcon, renderSignup, esc, md, store, games, game, gameUpdates, renderUpdate, renderNews, renderGameCard, forgeCard, progress, applySpoilers, observeReveals, statusLabel };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initChrome); else initChrome();
 })();
